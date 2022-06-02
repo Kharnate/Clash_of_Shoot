@@ -4,6 +4,9 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+
+const enemies = [];
+
 class Enemy{
     constructor(x, y, radius, color){
         this.x = x;
@@ -15,10 +18,37 @@ class Enemy{
     draw(){
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = "transparent";
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 2;
+        ctx.stroke();
         ctx.fill();
     }
 }
 
-const enemy1 = new Enemy(100, 100, 30, "green");
-enemy1.draw();
+function spawnEnemies(){
+    const x = canvas.width-60;
+    const y = canvas.height-60;
+    setInterval(()=>{
+        const colors = ["purple", "green", "blue", "yellow", "orange", "pink"];
+        const randColorsNum = Math.floor(Math.random() * colors.length);
+        const randY = Math.random() * y + 60;
+        const randX = Math.random() * x + 60;
+        enemies.push(new Enemy(randX, randY, 30, colors[randColorsNum]))
+        console.log(randColorsNum);
+        console.log(colors[randColorsNum])
+    }, 1000);
+}
+
+function animate(){
+    requestAnimationFrame(animate);
+    ctx.fillStyle("black");
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    enemies.forEach(enemy => {
+        enemy.draw();
+    });
+}
+
+animate();
+spawnEnemies();
