@@ -1,8 +1,11 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.style.width = '100vw';
+canvas.style.height = '100vh';
+
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
 
 
 const enemies = [];
@@ -20,17 +23,21 @@ class Enemy{
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
         ctx.fillStyle = "transparent";
         ctx.strokeStyle = this.color;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.stroke();
         ctx.fill();
     }
 }
 
+document.addEventListener('click', event=>{
+
+});
+
 function spawnEnemies(){
-    const x = canvas.width-60;
-    const y = canvas.height-60;
+    const x = canvas.width-120;
+    const y = canvas.height-160;
     setInterval(()=>{
-        const colors = ["purple", "green", "blue", "yellow", "orange", "pink"];
+        const colors = ["purple", "red", "yellow", "green", "blue", "white", "orange", "pink"];
         const randColorsNum = Math.floor(Math.random() * colors.length);
         const randY = Math.random() * y + 60;
         const randX = Math.random() * x + 60;
@@ -42,9 +49,8 @@ function spawnEnemies(){
 
 function animate(){
     requestAnimationFrame(animate);
-    ctx.fillStyle("black");
+    ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     enemies.forEach(enemy => {
         enemy.draw();
     });
