@@ -7,6 +7,8 @@ canvas.style.height = '100vh';
 canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 
+var elemLeft = canvas.offsetLeft;
+var elemTop = canvas.offsetTop;
 
 const enemies = [];
 
@@ -27,11 +29,12 @@ class Enemy{
         ctx.stroke();
         ctx.fill();
     }
+
+    clickEnemies(x, y){
+        const distance = Math.sqrt(( (x - this.x) * (x - this.x) ) + ( (y - this.y) * (y - this.y) ));
+        console.log(distance)
+    }
 }
-
-document.addEventListener('click', event=>{
-
-});
 
 function spawnEnemies(){
     const x = canvas.width-120;
@@ -42,8 +45,6 @@ function spawnEnemies(){
         const randY = Math.random() * y + 60;
         const randX = Math.random() * x + 60;
         enemies.push(new Enemy(randX, randY, 30, colors[randColorsNum]))
-        console.log(randColorsNum);
-        console.log(colors[randColorsNum])
     }, 1000);
 }
 
@@ -51,10 +52,23 @@ function animate(){
     requestAnimationFrame(animate);
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    enemies.forEach(enemy => {
+    enemies.forEach((enemy, index) => {
         enemy.draw();
+
+        canvas.addEventListener('mousedown', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const distance = Math.hypot(x - enemy.x, y - enemy.y);
+            if(distance - enemy.radius < 1){
+                enemies.splice(index, 1);
+            }
+        });
+
     });
 }
+
+
 
 animate();
 spawnEnemies();
