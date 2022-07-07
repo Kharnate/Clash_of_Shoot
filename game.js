@@ -11,25 +11,12 @@ var elemLeft = canvas.offsetLeft;
 var elemTop = canvas.offsetTop;
 
 const enemies = [];
+let score = 0;
+let removeEnemyTimer;
 
-// class Enemy{
-//     constructor(x, y, radius, color){
-//         this.x = x;
-//         this.y = y;
-//         this.radius = radius;
-//         this.color = color;
-//     }
-
-//     draw(){
-//         ctx.beginPath();
-//         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-//         ctx.fillStyle = "transparent";
-//         ctx.strokeStyle = this.color;
-//         ctx.lineWidth = 3;
-//         ctx.stroke();
-//         ctx.fill();
-//     }
-// }
+const gameTime = document.getElementById('game-time');
+const enemySpawnTime = document.getElementById('spawn-time');
+const scoreBoard = document.getElementById("scoreBoard");
 
 function Enemy(x, y, radius, color){
     var enemy = new Path2D();
@@ -41,8 +28,11 @@ function Enemy(x, y, radius, color){
 }
 
 function spawnEnemies(){
-    const x = canvas.width-120;
-    const y = canvas.height-160;
+    console.log("timer list: " + gameTime);
+    //let spawnTimer = enemySpawnTime.options[enemySpawnTime.selectedIndex].value;
+   // console.log("spawn Timer: " + spawnTimer);
+    const x = canvas.width - 120;
+    const y = canvas.height - 160;
     setInterval(()=>{
         const randY = Math.random() * y + 60;
         const randX = Math.random() * x + 60;
@@ -56,10 +46,12 @@ function enemiesClicked(event){
     y = event.clientY - rect.top,
     i;
 
-    for(i = enemies.length-1; i>=0; --i){
+    for(i = enemies.length-1; i >= 0; --i){
         if(ctx.isPointInPath(enemies[i], x, y, "nonzero")){
             console.log("enemy killed")
             enemies.splice(i,1);
+            score += 100;
+            scoreBoard.innerHTML = score;
         }
     }
 
