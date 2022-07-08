@@ -1,4 +1,7 @@
 # Clash Of Shoot
+<br>
+
+<strong>Demo</Strong>: 
 
 <br>
 
@@ -15,17 +18,15 @@
 1. Create Canvas Outline.
 2. Create Enemy Class.
 3. Spawn Random Enemies at random location.
-4. Despawn Enemies after certain period of time.
+4. Despawn Enemies after certain period of time, lossing score.
 5. Add Click event on the enemies, gaining score.
-6. Add miss clicked functionality, losing health.
-7. Add health bar
-8. Add score 
-9. Add pause button
-10. Add buy menu
+6. User can set custom time for game settings.
 
 <br>
 <br>
 
-### Task Completion and Important Details <br>
-Task 1 - 06/02/2022 <br>
-Task 2 - 06/02/2022 <br>
+### Task Completion<br>
+End Date: 07/08/2022
+
+<br>
+<br>
