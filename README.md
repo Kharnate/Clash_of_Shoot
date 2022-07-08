@@ -1,7 +1,7 @@
 # Cross Click
 <br>
 
-<strong>Demo: </Strong> 
+<strong>Demo: </Strong> https://kharnate.github.io/Cross_Click/
 
 <br>
 
