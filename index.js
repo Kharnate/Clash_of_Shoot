@@ -12,10 +12,12 @@ var elemTop = canvas.offsetTop;
 
 const enemies = [];
 let score = 0;
-let removeEnemyTimer;
 
-const gameTime = document.getElementById('game-time');
-const enemySpawnTime = document.getElementById('spawn-time');
+let removeEnemyWithTime;
+let spawnEnemyWithTime;
+let enemyRemoveTime;
+let enemySpawnTime;
+
 const scoreBoard = document.getElementById("scoreBoard");
 
 function Enemy(x, y, radius, color){
@@ -28,16 +30,38 @@ function Enemy(x, y, radius, color){
 }
 
 function spawnEnemies(){
-    console.log("timer list: " + gameTime);
-    //let spawnTimer = enemySpawnTime.options[enemySpawnTime.selectedIndex].value;
-   // console.log("spawn Timer: " + spawnTimer);
     const x = canvas.width - 120;
     const y = canvas.height - 160;
-    setInterval(()=>{
+    gameSettings();
+
+    spawnEnemyWithTime = setInterval(()=>{
         const randY = Math.random() * y + 60;
         const randX = Math.random() * x + 60;
         enemies.push(new Enemy(randX, randY, 30, "white"));
-    }, 1000);
+        gameOver();
+    }, enemySpawnTime);
+
+    removeEnemyWithTime = setInterval(removeEnemies, enemyRemoveTime);
+}
+
+function gameSettings(){
+    alert("Game Rules:\n\n1. Enter information according to your skills.\n2. Click all enemies before it disappears.\n3. If clicked before it disappears, you score +10 or else -5.\n4. The game will run till you complete 1000 points or go below 0.\n5. Good Luck!");
+    enemySpawnTime = prompt("Enemy spawn time in ms:", 1000)
+    enemyRemoveTime = prompt("Time before enemy disappears in ms:", 5000)
+}
+
+function gameOver(){
+    if(score >= 1000){
+        alert("GAME OVER, YOU WIN !!");
+        location.reload();
+        clearInterval(removeEnemyWithTime);
+        clearInterval(spawnEnemyWithTime);
+    } else if(score <0){
+        alert("GAME OVER, YOU LOST.\nMaybe try with higher settings.");
+        location.reload();
+        clearInterval(removeEnemyWithTime);
+        clearInterval(spawnEnemyWithTime);
+    }
 }
 
 function enemiesClicked(event){
@@ -48,9 +72,9 @@ function enemiesClicked(event){
 
     for(i = enemies.length-1; i >= 0; --i){
         if(ctx.isPointInPath(enemies[i], x, y, "nonzero")){
-            console.log("enemy killed")
+            clearInterval(removeEnemyWithTime);
             enemies.splice(i,1);
-            score += 100;
+            score += 10;
             scoreBoard.innerHTML = score;
         }
     }
@@ -66,10 +90,17 @@ function animate(){
     requestAnimationFrame(animate);
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     enemies.forEach((enemy) => {
         ctx.stroke(enemy, "nonzero");
         ctx.fill(enemy, "nonzero");
     });
+}
+
+function removeEnemies(){
+    enemies.splice(0,1);
+    score -= 5;
+    scoreBoard.innerHTML = score;
 }
 
 animate();
