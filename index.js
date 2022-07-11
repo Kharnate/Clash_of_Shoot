@@ -53,15 +53,12 @@ function gameSettings(){
 function gameOver(){
     if(score >= 1000){
         alert("GAME OVER, YOU WIN !!");
-        location.reload();
-        clearInterval(removeEnemyWithTime);
-        clearInterval(spawnEnemyWithTime);
     } else if(score <0){
         alert("GAME OVER, YOU LOST.\nMaybe try with higher settings.");
-        location.reload();
-        clearInterval(removeEnemyWithTime);
-        clearInterval(spawnEnemyWithTime);
     }
+     location.reload();
+     clearInterval(removeEnemyWithTime);
+     clearInterval(spawnEnemyWithTime);
 }
 
 function enemiesClicked(event){
