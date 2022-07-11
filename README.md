@@ -9,8 +9,8 @@
 <strong>Author: </strong> Karan Patel <br>
 <strong>Project Start Date: </strong>06/02/2022 <br>
 <strong>About Project: </strong> Click on the enemies before it disappears. <br>
-<strong>Objective: </strong>Learning about HTML Canvas Element and creating game based on it.
-<strong>Skills used: </strong> HTML, CSS, JS.
+<strong>Objective: </strong>Learning about HTML Canvas Element and creating game based on it. <br>
+<strong>Skills used: </strong> JS.
 
 <br>
 <br>
